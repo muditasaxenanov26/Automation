@@ -1,0 +1,21 @@
+
+using System;
+using System.Text.RegularExpressions;
+
+					
+public class Program
+{
+	public static void Main()
+	{
+		     string original = "176-09-3939";
+			 string regexObj = @"^\d{3}-\d{2}-\d{4}$";
+			 Match matchResult = Regex.Match(original,regexObj);
+				if(matchResult.Success)
+ 			 Console.WriteLine("SSN Verified");
+				else Console.WriteLine("The string is not SSN");
+	}
+}
+
+
+
+

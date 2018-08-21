@@ -1,0 +1,54 @@
+ [TestMethod]
+        public void Handles()
+        {
+            try
+            {
+                IWebDriver driver = new ChromeDriver();
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl("http://www.seleniumframework.com/Practiceform/");
+
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                String winHandleBefore = driver.CurrentWindowHandle;
+                driver.FindElement(By.XPath("//button[text()='New Browser Window']")).Click();
+                Thread.Sleep(2000);
+                // List<String> handles = driver.WindowHandles;
+                ReadOnlyCollection<string> handles = driver.WindowHandles;
+                string popupHandle = string.Empty;
+                ReadOnlyCollection<string> windowHandles = driver.WindowHandles;
+
+                foreach (string handle in windowHandles)
+                {
+                    if (handle != winHandleBefore)
+                    {
+                        popupHandle = handle; break;
+                    }
+                }
+
+                //switch to new window 
+                driver.SwitchTo().Window(popupHandle);
+                StreamWriter log;
+                if (!File.Exists("logfile.txt"))
+                {
+                    log = new StreamWriter("C:\\Users\\lmadmin\\Desktop\\log.txt");
+                }
+                else
+                {
+                    log = File.AppendText("C:\\Users\\lmadmin\\Desktop\\log.txt");
+                }
+                log.WriteLine("Title of the child window is:-" + driver.Title);
+                driver.Close();
+
+                //switch back to original window 
+                driver.SwitchTo().Window(winHandleBefore);
+
+                log.WriteLine("Title of the child window is:-" + driver.Title);
+
+                log.Close();
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }

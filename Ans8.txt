@@ -1,0 +1,37 @@
+  [TestMethod]
+        public void LinksinInmar()
+        {
+            try
+            {
+                IWebDriver driver = new ChromeDriver();
+                driver.Navigate().GoToUrl("http://www.inmar.com");
+                IList<IWebElement> links = driver.FindElements(By.TagName("a"));
+                StreamWriter log;
+                if (!File.Exists("logfile.txt"))
+                {
+                    log = new StreamWriter("C:\\Users\\lmadmin\\Desktop\\log.txt");
+                }
+                else
+                {
+                    log = File.AppendText("C:\\Users\\lmadmin\\Desktop\\log.txt");
+                }
+                log.WriteLine("Number of links present is" + links.Count);
+                int i;
+                String[] allText = new String[links.Count];
+                for (i = 1; i <= links.Count; i = i + 1)
+                {
+                    log.WriteLine(links[i].Text);
+                }
+                //  log.WriteLine("Link texts are:-" + allText);
+
+                log.Close();
+                driver.Quit();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+        }
+

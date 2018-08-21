@@ -1,0 +1,21 @@
+using System;
+using System.Net;
+public class Test
+{
+	public static void Main()
+	{
+		HttpStatusCode result = default(HttpStatusCode);
+		var request = HttpWebRequest.Create("http://www.thomas-bayer.com/sqlrest/CUSTOMER/");
+      request.Method = "GET";
+      using (var response = request.GetResponse() as HttpWebResponse)
+      {
+          if (response != null)
+          {
+            result = response.StatusCode;
+            response.Close();
+          }
+      }
+
+      Console.WriteLine(result);
+	}
+}

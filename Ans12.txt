@@ -1,0 +1,11 @@
+
+import json
+
+json_string = {"a": 1, "b": 2, "c": 3}
+data = json.loads(json.dumps(json_string))
+
+for key, value in data.items():
+	print "key: {0}\nvalue: {1}".format(key, value)
+
+print "Through key c:"
+print data['c']

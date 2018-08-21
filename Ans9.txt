@@ -1,0 +1,76 @@
+Ans 9 –
+__________________________________________________________________________________
+UnitTest1.cs
+__________________________________________________________________________________
+[TestMethod]
+        public void FormFilling()
+        {
+            try
+            {
+                IWebDriver driver = new ChromeDriver();
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl("http://www.practiceselenium.com/practice-form.html");
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                IWebElement targetTextBoxFName = driver.FindElement(txtFirstName);
+                targetTextBoxFName.SendKeys(ConfigurationManager.AppSettings["firstName"]);
+                IWebElement targetTextBoxLName = driver.FindElement(txtLastName);
+
+                targetTextBoxLName.SendKeys(ConfigurationManager.AppSettings["lastName"]);
+                IWebElement sex = driver.FindElement(By.XPath(radSex));
+                By targetButtonBy = By.XPath(radSex + "/*[@value='" + ConfigurationManager.AppSettings["gender"] + "']");
+                IWebElement targetButton = driver.FindElement(targetButtonBy);
+                targetButton.Click();
+
+                IWebElement TeaYears = driver.FindElement(By.XPath(radTeaYears));
+                By targetButtonBy2 = By.XPath(radTeaYears + "/*[@value='" + ConfigurationManager.AppSettings["yearsDrinking"] + "']");
+                IWebElement targetButton2 = driver.FindElement(targetButtonBy);
+                targetButton2.Click();
+
+
+                IWebElement DateStopped = driver.FindElement(txtDateStopped);
+                DateStopped.SendKeys(ConfigurationManager.AppSettings["dateStopped"]);
+
+                IWebElement blackTea = driver.FindElement(chkBlackTea);
+                blackTea.Click();
+
+                IWebElement exciteBreak = driver.FindElement(chkBreak);
+                exciteBreak.Click();
+
+                IWebElement continentList = driver.FindElement(drpContinents);
+                var selectElement = new SelectElement(continentList);
+
+                selectElement.SelectByText(ConfigurationManager.AppSettings["continent"]);
+                IWebElement topicList = driver.FindElement(selBackToWork);
+                topicList.SendKeys(ConfigurationManager.AppSettings["topic"]);
+                //Thread.Sleep(5000);
+                IWebElement okButton = driver.FindElement(btnOK);
+                okButton.Click();
+                driver.Close();
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+
+        }
+
+__________________________________________________________________________________
+App.config
+__________________________________________________________________________________
+
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <appSettings>
+      <add key="firstName" value="Roscoe"/>
+      <add key="lastName" value="Wallace"/>
+      <add key="gender" value="Female"/>
+      <add key="yearsDrinking" value="6"/>
+      <add key="dateStopped" value="June 2, 1938"/>
+      <add key="topic" value="Wait Commands"/>
+      <add key="continent" value="North America"/>
+    </appSettings>
+</configuration>
+
+
+
